@@ -1,15 +1,20 @@
 import time
 from algoritmos_ordenacao import estrategias
+from telemetry import registrar_logs  # Assuming this is where your registrar_logs function is
 
 def carregar_dados(nome_arquivo):
     with open(nome_arquivo, 'r') as f:
         return [int(linha) for linha in f]
 
-def executar_algoritmo(estrategia, dados):
+def executar_algoritmo(nome_algoritmo, estrategia, dados):
     inicio = time.time()
     dados_ordenados, comparacoes, trocas = estrategia.ordenar(dados.copy())
     fim = time.time()
     tempo_execucao = (fim - inicio) * 1000  # Convertendo para milissegundos
+    
+    # Pass the algorithm name explicitly to registrar_logs
+    registrar_logs(nome_algoritmo, len(dados), tempo_execucao, comparacoes, trocas)
+    
     return tempo_execucao, comparacoes, trocas
 
 def comparar_algoritmos(nome_arquivo, repeticoes=5):
@@ -22,7 +27,8 @@ def comparar_algoritmos(nome_arquivo, repeticoes=5):
         trocas_total = 0
 
         for _ in range(repeticoes):
-            tempo, comparacoes, trocas = executar_algoritmo(estrategia, dados)
+            # Pass the algorithm name as the first parameter
+            tempo, comparacoes, trocas = executar_algoritmo(nome, estrategia, dados)
             tempos.append(tempo)
             comparacoes_total += comparacoes
             trocas_total += trocas
