@@ -9,7 +9,7 @@ def executar_algoritmo(estrategia, dados):
     inicio = time.time()
     dados_ordenados, comparacoes, trocas = estrategia.ordenar(dados.copy())
     fim = time.time()
-    tempo_execucao = (fim - inicio) * 1000  # Convertendo para milissegundos
+    tempo_execucao = (fim - inicio) * 1000
     return tempo_execucao, comparacoes, trocas
 
 def comparar_algoritmos(nome_arquivo, repeticoes=5):

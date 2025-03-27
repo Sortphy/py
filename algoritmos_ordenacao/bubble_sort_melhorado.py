@@ -13,4 +13,4 @@ class BubbleSortMelhorado:
                     trocou = True
             if not trocou:
                 break
-        return dados, comparacoes, trocas
+        return dados, comparacoes, trocas   
