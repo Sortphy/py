@@ -22,6 +22,7 @@ Este projeto tem como objetivo implementar, comparar e analisar a performance de
 ## Requisitos
 
 Antes de executar o projeto, certifique-se de ter instalado:
+
 - Python 3.8 ou superior.
 - Gerenciador de pacotes `pip`.
 
@@ -30,24 +31,29 @@ Antes de executar o projeto, certifique-se de ter instalado:
 ## Instalação
 
 1. Clone o repositório:
+
    ```bash
    git clone https://github.com/seu-usuario/comparacao-algoritmos-ordenacao.git
    cd comparacao-algoritmos-ordenacao
+
 2. Instale as dependências:
+
     ```bash
     pip install -r requirements.txt
-##  Como Executar o Projeto
+
+## Como Executar o Projeto
+
 1. Gerar Dados Aleatórios
 
 Execute o script gerador_dados.py para gerar conjuntos de números aleatórios:
 
-    python gerador_dados.py
+   python gerador_dados.py
 
-2. Executar os Algoritmos de Ordenação
+2.Executar os Algoritmos de Ordenação
 
 Execute o script main.py para rodar todos os algoritmos de ordenação e coletar métricas de desempenho:
 
-    python main.py
+  python main.py
 
 O que acontece:
 
@@ -56,24 +62,28 @@ O que acontece:
 - Métricas como tempo de execução, comparações e trocas são coletadas.
 
 - Logs são registrados usando o OpenTelemetry.
-3. Visualizar Logs e Métricas
+3.Visualizar Logs e Métricas
 
 Os logs são registrados no console e podem ser enviados para o Jaeger para visualização.
 Configuração do Jaeger:
 
-### Inicie o Jaeger usando Docker:
-    docker run -d --name jaeger \
-      -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
-      -p 5775:5775/udp \
-      -p 6831:6831/udp \
-      -p 6832:6832/udp \
-      -p 5778:5778 \
-      -p 16686:16686 \
-      -p 14268:14268 \
-      -p 9411:9411 \
-      jaegertracing/all-in-one:1.21
-#### Acesse o Jaeger no navegador:
-    http://localhost:16686
+### Inicie o Jaeger usando Docker
+
+  docker run -d --name jaeger \
+    -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+    -p 5775:5775/udp \
+    -p 6831:6831/udp \
+    -p 6832:6832/udp \
+    -p 5778:5778 \
+    -p 16686:16686 \
+    -p 14268:14268 \
+    -p 9411:9411 \
+    jaegertracing/all-in-one:1.21
+
+#### Acesse o Jaeger no navegador
+
+<http://localhost:16686>
+
 Procure pelos traces gerados pelo projeto.
 
 ## Resultados
