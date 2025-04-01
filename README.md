@@ -30,12 +30,7 @@ Antes de executar o projeto, certifique-se de ter instalado:
 
 ## Instalação
 
-1. Clone o repositório:
-
-   ```bash
-   git clone https://github.com/seu-usuario/comparacao-algoritmos-ordenacao.git
-   cd comparacao-algoritmos-ordenacao
-   ```
+1. Clone o repositório
 
 2. Instale as dependências:
 
@@ -78,16 +73,8 @@ Os logs são registrados no console e podem ser enviados para o Jaeger para visu
 Inicie o Jaeger usando Docker:
 
 ```bash
-docker run -d --name jaeger \
-  -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
-  -p 5775:5775/udp \
-  -p 6831:6831/udp \
-  -p 6832:6832/udp \
-  -p 5778:5778 \
-  -p 16686:16686 \
-  -p 14268:14268 \
-  -p 9411:9411 \
-  jaegertracing/all-in-one:1.21
+docker run -d --name jaeger -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 -p 5775:5775/udp -p 6831:6831/udp -p 6832:6832/udp -p 5778:5778 -p 16686:16686 -p 14268:14268 -p 9411:9411 jaegertracing/all-in-one:1.21
+
 ```
 
 Acesse o Jaeger no navegador:
