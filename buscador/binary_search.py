@@ -28,11 +28,9 @@ def get_user_input():
             print("Por favor, digite um número inteiro válido.")
 
 if __name__ == '__main__':
-    # Configuração de caminhos
     project_root = Path(__file__).parent.parent
     filename = project_root / 'dados' / 'dados_100000.txt'
     
-    # Carregamento dos dados
     try:
         unordered_data = load_unordered_list(filename)
     except FileNotFoundError:
@@ -40,7 +38,6 @@ if __name__ == '__main__':
         print("Verifique se o arquivo existe e o caminho está correto")
         exit(1)
     
-    # Ordenação com TimSort
     print("\nOrdenando dados com TimSort...")
     start_time = time()
     tim_sorter = TimSort()
@@ -51,7 +48,6 @@ if __name__ == '__main__':
     print(f"Tempo de ordenação: {sort_time:.2f}ms")
     print(f"Comparações: {comparacoes}, Trocas: {trocas}")
     
-    # Criação da tabela hash
     print("\nCriando tabela hash...")
     start_time = time()
     hash_table = create_hash_table(sorted_data)
@@ -59,14 +55,12 @@ if __name__ == '__main__':
     print(f"Tabela hash criada em {hash_time:.2f}ms")
     print(f"Tamanho da tabela: {len(hash_table)} elementos\n")
     
-    # Loop de busca
     while True:
         target = get_user_input()
         if target is None:
             print("Encerrando o programa...")
             break
         
-        # Busca na tabela hash
         start_time = time()
         index = hash_table.get(target, -1)
         search_time = (time() - start_time) * 1000
