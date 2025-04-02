@@ -2,7 +2,6 @@ import sys
 import os
 from pathlib import Path
 
-# Adiciona o diretório pai ao Python path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from algoritmos_ordenacao.tim_sort import TimSort
@@ -36,11 +35,11 @@ def get_user_input():
             print("Por favor, digite um número inteiro válido.")
 
 if __name__ == '__main__':
-    # Caminho corrigido para os dados
+
     project_root = Path(__file__).parent.parent
     filename = project_root / 'dados' / 'dados_100000.txt'
     
-    # Carrega os dados
+    
     try:
         unordered_data = load_unordered_list(filename)
     except FileNotFoundError:
@@ -48,14 +47,12 @@ if __name__ == '__main__':
         print("Verifique se o arquivo existe e o caminho está correto")
         exit(1)
     
-    # Ordena com TimSort
     tim_sorter = TimSort()
     sorted_data, comparacoes, trocas = tim_sorter.ordenar(unordered_data.copy())
     
     print(f"\nDados ordenados (amostra): {sorted_data[:5]}...{sorted_data[-5:]}")
     print(f"Comparações: {comparacoes}, Trocas: {trocas}\n")
     
-    # Loop para permitir múltiplas buscas
     while True:
         target = get_user_input()
         if target is None:
