@@ -18,5 +18,5 @@ if __name__ == "__main__":
     # Gerar conjuntos de dados de diferentes tamanhos
     gerar_dados(1000, 'dados/dados_1000.txt')
     gerar_dados(10000, 'dados/dados_10000.txt')
-    gerar_dados(100000, 'dados/dados_100000.txt')
+    gerar_dados(1000000, 'dados/dados_100000.txt')
     print("Dados gerados com sucesso!")
