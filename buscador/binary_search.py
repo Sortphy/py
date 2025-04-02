@@ -1,28 +1,39 @@
-from gerar_set import generate_ordered_set
+from algoritmos_ordenacao.tim_sort import TimSort
 
+def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
 
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
 
-def binary_search(ordered_set, objetivo, left=0, right=None):
-    if right is None:
-        right = len(ordered_set) - 1
+    return -1
 
-    if left > right:
-        return -1  # nao achou
+def load_unordered_list(filename):
+    """Reads a text file with one number per line and returns a list of integers."""
+    with open(filename, 'r') as file:
+        return [int(line.strip()) for line in file if line.strip()]
 
-    mid = (left + right) // 2
-
-    if ordered_set[mid] == objetivo:
-        return mid  # achou, retorna o index
-    elif ordered_set[mid] < objetivo:
-        return binary_search(ordered_set, objetivo, mid + 1, right)  # buscar lado direito
+if __name__ == '__main__':
+    # Load unordered numbers from the text file
+    filename = 'unordered.txt'
+    unordered_data = load_unordered_list(filename)
+    
+    # Sort the list using TimSort
+    tim_sorter = TimSort()
+    sorted_data, comparacoes, trocas = tim_sorter.ordenar(unordered_data)
+    print("Sorted list:", sorted_data)
+    print("Comparisons:", comparacoes, "Swaps:", trocas)
+    
+    # Search for the target using binary search
+    target = 7189
+    index = binary_search(sorted_data, target)
+    if index != -1:
+        print(f"Target {target} found at index {index}")
     else:
-        return binary_search(ordered_set, objetivo, left, mid - 1)  # buscar lado esquerdo
-
-
-
-set_ordenado = generate_ordered_set()
-
-objetivo = 7189
-
-result = binary_search(set_ordenado, objetivo)
-
+        print(f"Target {target} not found")
