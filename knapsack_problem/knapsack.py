@@ -19,48 +19,72 @@
 
 # Problema da Mochila (Knapsack Problem) com Recursão e Memoization
 
-def knapsack(items, capacity, index=0, memo=None):
-    if memo is None:
-        memo = {}
+import matplotlib.pyplot as plt
 
-    # cria uma chave única com base no índice do item e na capacidade restante
-    key = (index, capacity)
+class Node:
+    def __init__(self, label, value, x=0, y=0):
+        self.label = label
+        self.value = value
+        self.x = x
+        self.y = y
+        self.children = []
 
-    # verifica se esse subproblema já foi resolvido antes
-    if key in memo:
-        print(f"usando valor em cache para key={key}")
-        return memo[key]
+def knapsack_visual(items, capacity):
+    memo = {}
+    counter = {'count': 0}
 
-    # caso base: sem itens ou capacidade restante
-    if index >= len(items) or capacity <= 0:
-        return 0
+    def helper(index, capacity, depth, x_offset):
+        key = (index, capacity)
+        counter['count'] += 1
+        node_label = f'i:{index} c:{capacity}'
+        
+        if key in memo:
+            value = memo[key]
+            node = Node(node_label + f'\ncache:{value}', value, x_offset, -depth)
+            return value, node
 
-    weight, value = items[index]
+        if index >= len(items) or capacity <= 0:
+            node = Node(node_label + '\nret: 0', 0, x_offset, -depth)
+            return 0, node
 
-    print(f"analisando item {index} com peso={weight}, valor={value} e capacidade restante={capacity}")
+        weight, value = items[index]
+        left_value, left_node = helper(index + 1, capacity, depth + 1, x_offset - 1.5 ** (4 - depth))
 
-    # opção 1: não incluir o item atual
-    not_taken = knapsack(items, capacity, index + 1, memo)
+        if weight <= capacity:
+            right_value, right_node = helper(index + 1, capacity - weight, depth + 1, x_offset + 1.5 ** (4 - depth))
+            result = max(left_value, value + right_value)
+        else:
+            right_node = None
+            result = left_value
 
-    # opção 2: incluir o item atual (se couber na mochila)
-    if weight <= capacity:
-        taken = value + knapsack(items, capacity - weight, index + 1, memo)
-        result = max(taken, not_taken)
-        print(f"comparando: incluir={taken} vs não incluir={not_taken} => escolhido={result}")
-    else:
-        result = not_taken
-        print(f"item {index} não cabe na mochila (peso={weight}), pulando")
+        memo[key] = result
+        node = Node(node_label + f'\nret: {result}', result, x_offset, -depth)
+        node.children.append(left_node)
+        if right_node:
+            node.children.append(right_node)
 
-    # armazena o resultado no cache
-    memo[key] = result
-    return result
+        return result, node
 
+    result, root_node = helper(0, capacity, 0, 0)
+    return result, root_node
+
+def draw_tree(node, ax):
+    ax.text(node.x, node.y, node.label, ha='center', bbox=dict(boxstyle="round", fc="lightblue"))
+    for child in node.children:
+        ax.plot([node.x, child.x], [node.y, child.y], 'k-')
+        draw_tree(child, ax)
 
 if __name__ == "__main__":
-    # lista de itens (peso, valor)
-    itens = [(2, 3), (1, 2), (3, 4), (2, 2)]
-    capacidade_mochila = 5
+    items = [(2, 3), (1, 2), (3, 4), (2, 2)]
+    capacity = 5
 
-    print("iniciando resolução do problema da mochila com recursão e memoization...\n")
-    valor_maximo = knapsack(itens, capacidade_mochila)
-    print(f"\nvalor máximo que pode ser carregado: {valor_maximo}")
+    print("gerando visualização com matplotlib...")
+    result, root = knapsack_visual(items, capacity)
+    print(f"valor máximo: {result}")
+
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.axis('off')
+    draw_tree(root, ax)
+    plt.title("Árvore de chamadas do Problema da Mochila")
+    plt.tight_layout()
+    plt.show()
